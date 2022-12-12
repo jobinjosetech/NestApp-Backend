@@ -4,6 +4,7 @@ import com.example.NestDigitalApp.dao.EmployeeDao;
 import com.example.NestDigitalApp.dao.Leave1Dao;
 import com.example.NestDigitalApp.model.Employee;
 import com.example.NestDigitalApp.model.Leaves1;
+import com.example.NestDigitalApp.model.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,4 +39,8 @@ public class EmployeeController {
         return hashMap;
     }
 
+    @PostMapping(path = "/employeeProfile", consumes = "application/json", produces = "application/json")
+    public List<Employee> getEmployeeProfile(@RequestBody Employee emp){
+        return (List<Employee>) empdao.GetEmployeeProfile(emp.getId());
+    }
 }

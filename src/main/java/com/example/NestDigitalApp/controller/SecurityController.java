@@ -28,4 +28,10 @@ public class SecurityController {
         }
         return hashMap;
     }
+
+    @PostMapping(path = "/securityProfile", consumes = "application/json", produces = "application/json")
+    public List<Security> getSecurityProfile(@RequestBody Security sc){
+        System.out.println(sc.getId());
+        return (List<Security>) sdao.GetSecurityProfile(sc.getId());
+    }
 }
