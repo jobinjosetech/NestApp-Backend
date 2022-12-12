@@ -5,6 +5,7 @@ import com.example.NestDigitalApp.dao.Leave1Dao;
 import com.example.NestDigitalApp.model.Employee;
 import com.example.NestDigitalApp.model.Leaves1;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,6 +58,11 @@ public class AdminController {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("status","success");
         return hashMap;
+    }
+
+    @GetMapping("/viewAllEmployee")
+    public List<Employee> GetAllEmployee(){
+        return (List<Employee>) empdao.findAll();
     }
 
 }
