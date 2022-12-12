@@ -50,4 +50,13 @@ public class AdminController {
         return  (List<Employee>) empdao.SearchEmployee(emp.getName());
     }
 
+    @PostMapping(path = "/editEmployee", consumes = "application/json", produces = "application/json")
+    public HashMap<String, String> EditEmployee(@RequestBody Employee emp){
+        System.out.println(emp.getId());
+        empdao.EditEmployee(emp.getId(), emp.getDesignation(), emp.getEmail(), emp.getEmpCode(), emp.getName(), emp.getPassword(), emp.getPhone(), emp.getUsername());
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("status","success");
+        return hashMap;
+    }
+
 }
