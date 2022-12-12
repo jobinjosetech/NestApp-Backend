@@ -30,13 +30,14 @@ public class AdminController {
 
     @PostMapping(path = "/addEmployee", consumes = "application/json", produces = "application/json")
     public HashMap<String, String> AddEmployee(@RequestBody Employee emp){
-        List<Employee> emp1 = (List<Employee>) empdao.UserLoginDetails(emp.getUsername(), emp.getPassword());
+        List<Employee> emp1 = (List<Employee>) empdao.UserLoginDetailsByCred(emp.getUsername(), emp.getPassword(), emp.getEmpCode());
         HashMap<String, String> hashMap = new HashMap<>();
         if(emp1.size()==0){
             LocalDateTime now = LocalDateTime.now();
             empdao.save(emp);
+            List<Employee> result = (List<Employee>) empdao.UserLoginDetailsById(emp.getEmpCode());
             Leaves1 l1 = new Leaves1();
-            l1.setEmpCode(emp.getEmpCode());
+            l1.setEmpId(String.valueOf(result.get(0).getId()));
             l1.setYear(dtf.format(now));
             l1.setCasualLeave(20);
             l1.setSickLeave(7);
