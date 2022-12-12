@@ -2,8 +2,10 @@ package com.example.NestDigitalApp.controller;
 
 import com.example.NestDigitalApp.dao.EmployeeDao;
 import com.example.NestDigitalApp.dao.Leave1Dao;
+import com.example.NestDigitalApp.dao.SecurityDao;
 import com.example.NestDigitalApp.model.Employee;
 import com.example.NestDigitalApp.model.Leaves1;
+import com.example.NestDigitalApp.model.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,8 @@ public class AdminController {
     private EmployeeDao empdao;
     @Autowired
     private Leave1Dao l1dao;
+    @Autowired
+    private SecurityDao sdao;
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy");
 
@@ -65,4 +69,11 @@ public class AdminController {
         return (List<Employee>) empdao.findAll();
     }
 
+    @PostMapping(path = "/addSecurity", consumes = "application/json", produces = "application/json")
+    public HashMap<String, String> AddSecurity(@RequestBody Security sc){
+        sdao.save(sc);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("status","success");
+        return hashMap;
+    }
 }
