@@ -7,10 +7,7 @@ import com.example.NestDigitalApp.model.Employee;
 import com.example.NestDigitalApp.model.Leaves1;
 import com.example.NestDigitalApp.model.Security;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,6 +25,7 @@ public class AdminController {
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy");
 
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "/addEmployee", consumes = "application/json", produces = "application/json")
     public HashMap<String, String> AddEmployee(@RequestBody Employee emp){
         List<Employee> emp1 = (List<Employee>) empdao.UserLoginDetailsByCred(emp.getUsername(), emp.getPassword(), emp.getEmpCode());
@@ -50,12 +48,13 @@ public class AdminController {
         return hashMap;
     }
 
-
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "/searchEmployee", consumes = "application/json", produces = "application/json")
     public List<Employee> SearchEmployee(@RequestBody Employee emp){
         return  (List<Employee>) empdao.SearchEmployee(emp.getName());
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "/editEmployee", consumes = "application/json", produces = "application/json")
     public HashMap<String, String> EditEmployee(@RequestBody Employee emp){
         System.out.println(emp.getId());
@@ -65,11 +64,22 @@ public class AdminController {
         return hashMap;
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/deleteEmployee", consumes = "application/json", produces = "application/json")
+    public HashMap<String, String> DeleteEmployee(@RequestBody Employee emp){
+        empdao.DeleteEmployee(emp.getId());
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("status","success");
+        return hashMap;
+    }
+
+    @CrossOrigin(origins = "*")
     @GetMapping("/viewAllEmployee")
     public List<Employee> GetAllEmployee(){
         return (List<Employee>) empdao.findAll();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "/addSecurity", consumes = "application/json", produces = "application/json")
     public HashMap<String, String> AddSecurity(@RequestBody Security sc){
         sdao.save(sc);

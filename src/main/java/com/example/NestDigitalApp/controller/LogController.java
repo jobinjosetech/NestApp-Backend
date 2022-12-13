@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class LogController {
@@ -29,21 +30,23 @@ public class LogController {
 
     DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
     DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-
+    DateTimeFormatter rev_df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/addEmpEntryLog")
     public HashMap<String, String> addEmpEntryLogs(@RequestBody Log l){
         LocalDateTime now = LocalDateTime.now();
         List<Employee> emp = (List<Employee>) empdao.UserLoginDetailsById(l.getEmpCode());
+        System.out.println(emp.get(0).getId());
         HashMap<String, String> hashMap = new HashMap<>();
             if(emp.size()==0){
                 hashMap.put("status","failed");
             }else{
-                List<LeaveModel> result = (List<LeaveModel>) l1dao.GetLeaveUpdates(emp.get(0).getId(),df.format(now));
-                if(result.size()==0 || result.get(0).getLeaveStatus()!=1){
+
+                List<Map<String,String>> result = (List<Map<String,String>>) l1dao.GetLeaveUpdates(emp.get(0).getId(),rev_df.format(now));
+                if(result.size()==0){
                     l.setEmpId(emp.get(0).getId());
-                    l.setDate(df.format(now));
-                    l.setEntryTime(tf.format(now));
+                    l.setDate(String.valueOf(df.format(now)));
+                    l.setEntryTime(String.valueOf(tf.format(now)));
                     ldao.save(l);
                     hashMap.put("status","success");
                 }else{
