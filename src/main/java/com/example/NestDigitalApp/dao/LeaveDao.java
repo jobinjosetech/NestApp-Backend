@@ -12,10 +12,10 @@ import java.util.Map;
 
 public interface LeaveDao extends CrudRepository<LeaveModel, Integer> {
 
-    @Query(value = "SELECT l.`id`, l.`apply_date`, e.emp_code, e.id AS empId, e.name, l.`from_date`, l.`leave_status`, l.`remarks`, l.`to_date`, l.`leave_type` FROM `leave2` AS l JOIN `employee` AS e ON e.id = l.emp_id WHERE `leave_status`=0", nativeQuery = true)
+    @Query(value = "SELECT l.`id`, l.`apply_date`, e.emp_code, e.id AS empId, e.name, l.`from_date`, l.`leave_status`, l.`remarks`, l.`to_date`, l.`leave_type` FROM `leave2` AS l JOIN `employee` AS e ON e.id = l.emp_id WHERE `leave_status`=0 ORDER BY l.`from_date` ASC", nativeQuery = true)
     List<Map<String, String>> GetAllLeaves();
 
-    @Query(value = "SELECT `id`, `apply_date`, `emp_id`, `from_date`, `leave_status`, `leave_type`, `remarks`, `to_date` FROM `leave2` WHERE `emp_id`= :id", nativeQuery = true)
+    @Query(value = "SELECT `id`, `apply_date`, `emp_id`, `from_date`, `leave_status`, `leave_type`, `remarks`, `to_date` FROM `leave2` WHERE `emp_id`= :id ORDER BY `apply_date` DESC", nativeQuery = true)
     List<LeaveModel> GetEmployeeLeaves(@Param("id") int id);
 
     @Modifying

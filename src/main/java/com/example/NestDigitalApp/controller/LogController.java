@@ -6,10 +6,7 @@ import com.example.NestDigitalApp.dao.LogDao;
 import com.example.NestDigitalApp.dao.VisitorsLogDao;
 import com.example.NestDigitalApp.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -93,6 +90,18 @@ public class LogController {
             vldao.UpdateExitEntry(vl.getPhone(), vl.getExitTime());
             hashMap.put("status","success");
         return hashMap;
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/viewEmpLog")
+    public List<Log> ViewEmpLog(@RequestBody Log vl){
+        return ldao.GetEmpLog(vl.getEmpId());
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/viewSecEmpLog")
+    public List<Map<String,String>> ViewSecEmpLog(){
+        return ldao.GetSecEmpLog();
     }
 
 }

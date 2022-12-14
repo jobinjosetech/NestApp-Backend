@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface Leave1Dao extends CrudRepository<Leaves1, Integer>{
-    @Query(value = "SELECT `id`, `casual_leave`, `emp_id`, `sick_leave`, `special_leave`, `year` FROM `leavedetails` WHERE `emp_id`= :id", nativeQuery = true)
-    List<Leaves1> GetLeaveDetails(@Param("id") Integer id);
+    @Query(value = "SELECT `id`, `casual_leave`, `emp_id`, `sick_leave`, `special_leave`, `year` FROM `leavedetails` WHERE `emp_id`= :id AND `year`= :year", nativeQuery = true)
+    List<Leaves1> GetLeaveDetails(@Param("id") Integer id, @Param("year") String year);
 
     @Modifying
     @Transactional
