@@ -4,6 +4,7 @@ import com.example.NestDigitalApp.dao.SecurityDao;
 import com.example.NestDigitalApp.model.Employee;
 import com.example.NestDigitalApp.model.Security;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ public class SecurityController {
     @Autowired
     private SecurityDao sdao;
 
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "/securityLogin", consumes = "application/json", produces = "application/json")
     public HashMap<String, String> SecurityLogin(@RequestBody Security sc){
         HashMap<String, String> hashMap = new HashMap<>();
@@ -29,6 +31,7 @@ public class SecurityController {
         return hashMap;
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(path = "/securityProfile", consumes = "application/json", produces = "application/json")
     public List<Security> getSecurityProfile(@RequestBody Security sc){
         System.out.println(sc.getId());
