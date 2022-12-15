@@ -23,5 +23,7 @@ public interface LeaveDao extends CrudRepository<LeaveModel, Integer> {
     @Query(value = "UPDATE `leave2` SET `leave_status`= :status WHERE `id`= :id", nativeQuery = true)
     void UpdateLeaves(@Param("id") int id, @Param("status") int status);
 
+    @Query(value = "SELECT `id`, `apply_date`, `emp_id`, `from_date`, `leave_status`, `leave_type`, `remarks`, `to_date` FROM `leave2` WHERE `emp_id`= :empId  AND :date BETWEEN `from_date` AND `to_date` AND `leave_status`=1", nativeQuery = true)
+    List<Map<String,String>> GetLeaveUpdates(@Param("empId") Integer empId, @Param("date") String date);
 
 }
