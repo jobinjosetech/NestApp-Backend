@@ -1,6 +1,7 @@
 package com.example.NestDigitalApp.dao;
 
 import com.example.NestDigitalApp.model.Log;
+import com.example.NestDigitalApp.model.VisitorLog;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,8 @@ public interface LogDao extends CrudRepository<Log, Integer> {
 
     @Query(value = "SELECT l.`id`, l.`date`, l.`emp_code`, l.`emp_id`, l.`entry_time`, l.`exit_time`, e.`name`, e.emp_code FROM `log`AS l JOIN `employee`AS e ON l.`emp_id` = e.`id` ORDER BY `date` DESC" , nativeQuery = true)
     List<Map<String,String>> GetSecEmpLog();
+
+    @Query(value = "SELECT l.`id`, l.`date`, l.`emp_code`, l.`emp_id`, l.`entry_time`, l.`exit_time`, e.name FROM `log` AS l JOIN `employee` AS e ON l.`emp_id` = e.`id` WHERE l.`date`= :date", nativeQuery = true)
+    List<Map<String, String>> SearchEmpLog(@Param("date") String date);
+
 }
